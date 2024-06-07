@@ -23,7 +23,7 @@ RSpec.describe "bulk_discounts index" do
     expect(page).to have_link("Bulk Discount ##{@bd_2.id}")
 
     click_link("Bulk Discount ##{@bd_1.id}")
-    expect(current_path).to eq(merchant_bulk_discount(@m1, @bd1))
+    expect(current_path).to eq(merchant_bulk_discount_path(@m1, @bd1))
   end
 
 end
