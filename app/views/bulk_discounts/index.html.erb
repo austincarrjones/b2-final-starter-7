@@ -4,4 +4,11 @@
   <div class="row">
     <p class='col-12'>My Discounts</p>
   </div>
-</div>
+
+  <% @bulk_discounts.each do |bulk_discount| %>
+  <%# <% binding.pry %> 
+    <p><%= link_to "Bulk Discount ##{bulk_discount.id}", merchant_bulk_discount_path(@merchant, bulk_discount) %> - 
+        Percentage Discount: <%= bulk_discount.percentage_discount * 100 %>, 
+        Quantity Threshold: <%= bulk_discount.quantity_threshold %>" 
+  <% end %>
+</body>
