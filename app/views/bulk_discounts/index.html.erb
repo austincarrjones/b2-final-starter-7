@@ -5,6 +5,16 @@
     <p class='col-12'>My Discounts</p>
   </div>
 
+  <p><%= link_to "Create New Discount", new_merchant_bulk_discount_path(@merchant)%></p>
+
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="column-header">
+        <p>Bulk Discounts</p>
+      </div>
+    </div>
+  </div>
+
   <% @bulk_discounts.each do |bulk_discount| %>
     <p><%= link_to "Bulk Discount ##{bulk_discount.id}", merchant_bulk_discount_path(@merchant, bulk_discount) %> - Percentage Discount: <%= bulk_discount.percentage_format %>%, Quantity Threshold: <%= bulk_discount.quantity_threshold %></p>
   <% end %>
