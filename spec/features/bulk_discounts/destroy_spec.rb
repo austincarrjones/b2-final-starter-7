@@ -15,10 +15,9 @@ RSpec.describe "bulk_discounts destroy" do
     within("#discount-#{@bd_1.id}") do
       click_button "Delete"
     end
-
+    
     expect(current_path).to eq merchant_bulk_discounts_path(@m_1)
     expect(page).to_not have_content("Bulk Discount ##{@bd_1.id} - Percentage Discount: 20%, Quantity Threshold: #{10}")
-
   end
 
 end
