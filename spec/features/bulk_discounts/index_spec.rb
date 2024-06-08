@@ -33,6 +33,7 @@ RSpec.describe "bulk_discounts index" do
     expect(current_path).to eq new_merchant_bulk_discount_path(@m_1)
   end
 
+  #probably put in describe block or put on new_spec.rb file
   it "should redirect to bulk discount index and have new discount listed after form completion and submission" do
     expect(page).to_not have_content("Percentage Discount: 30%")
     expect(page).to_not have_content("Quantity Threshold: 15")
@@ -47,5 +48,4 @@ RSpec.describe "bulk_discounts index" do
     expect(page).to have_content("Percentage Discount: 30%")
     expect(page).to have_content("Quantity Threshold: 15")
   end
-
 end
