@@ -11,8 +11,8 @@ RSpec.describe "bulk_discounts show" do
     click_link("Bulk Discount ##{@bd_1.id}")
     
     expect(current_path).to eq merchant_bulk_discount_path(@m_1, @bd_1)
-    expect(page).to have_content("Bulk Discount ##{@bd_1.id} - Percentage Discount: 20%, Quantity Threshold: #{10}")
-    expect(page).to_not have_content("Bulk Discount ##{@bd_2.id} - Percentage Discount: 50%, Quantity Threshold: #{50}")
+    expect(page).to have_content("Bulk Discount ##{@bd_1.id} - Percentage Discount: 20%, Quantity Threshold: 10")
+    expect(page).to_not have_content("Bulk Discount ##{@bd_2.id} - Percentage Discount: 50%, Quantity Threshold: 50")
   end
 
   it "should have a link to update the discount" do 
