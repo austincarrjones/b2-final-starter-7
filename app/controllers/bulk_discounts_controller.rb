@@ -18,18 +18,20 @@ class BulkDiscountsController < ApplicationController
 
   def create
     @merchant = Merchant.find(params[:merchant_id])
-    @bulk_discount = @merchant.bulk_discounts.new(bulk_discount_params)
-    if @bulk_discount.save
+    BulkDiscount.create!(percentage_discount: params[:percentage_discount], 
+                        quantity_threshold: params[:quantity_threshold],
+                        merchant: @merchant)
+    # if @bulk_discount.save
       redirect_to merchant_bulk_discounts_path(@merchant), notice: 'Bulk discount was successfully created.'
-    else
-      render :new
-    end
+    # else
+    #   render :new
+    # end
   end
 
-  private
-  def bulk_discount_params
-    params.require(:bulk_discount).permit(:percentage_discount, :quantity_threshold)
-  end
+  # private - this was not working correctly and was not covered.
+  # def bulk_discount_params
+  #   params.require(:bulk_discount).permit(:percentage_discount, :quantity_threshold)
+  # end
 
   # def find_bulk_discount_and_merchant
   #   @bulk_discount = BulkDiscount.find(params[:id])

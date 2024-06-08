@@ -1,7 +1,7 @@
 <%= form_with model: model, method: method, url: url, class: 'bulk_discount_form', local: true do |f| %>
   <%= f.label :percentage_discount %>
-  <%= f.text_field :percentage_discount %><br/><br/>
+  <%= f.number_field :percentage_discount, step: 0.01, min: 0, max: 1 %><br/><br/>
   <%= f.label :quantity_threshold %>
-  <%= f.text_field :quantity_threshold %><br/><br/>
+  <%= f.number_field :quantity_threshold, step:1, min: 1 %><br/><br/>
   <%= f.submit 'Submit'%>
 <% end %>
