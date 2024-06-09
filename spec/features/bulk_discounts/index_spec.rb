@@ -39,7 +39,6 @@ RSpec.describe "bulk_discounts index" do
     expect(page).to_not have_content("Quantity Threshold: 15")
     
     click_link("Create New Discount")
-    # save_and_open_page
     fill_in "Percentage discount", with: "0.3"
     fill_in "Quantity threshold", with: "15"
     click_button "Submit"

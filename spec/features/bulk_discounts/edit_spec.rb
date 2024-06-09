@@ -10,20 +10,21 @@ RSpec.describe "bulk_discounts edit" do
   end
   
   it "sees a form filled in with the items attributes" do
-    expect(find_field("Percentage discount").value).to eq(@bd_1.percentage_discount)
-    expect(find_field("Quantity Threshold").value).to eq(@bd_1.quantity_threshold)
+    expect(find_field("Percentage discount").value).to eq("0.2")
+    expect(find_field("Quantity threshold").value).to eq("10")
     
-    expect(find_field("Percentage discount").value).to_not eq(@bd_2.percentage_discount)
+    expect(find_field("Percentage discount").value).to_not eq("0.5")
+    expect(find_field("Quantity threshold").value).to_not eq("50")
   end
 
-  xit "can fill in form, click submit, and redirect to that discount's show page and see updated info" do
+  it "can fill in form, click submit, and redirect to that discount's show page and see updated info" do
     fill_in "Percentage discount", with: "0.45"
     fill_in "Quantity threshold", with: "25"
+
     click_button "Submit"
 
     expect(current_path).to eq merchant_bulk_discount_path(@m_1, @bd_1)
     expect(page).to have_content("Bulk Discount ##{@bd_1.id} - Percentage Discount: 45%, Quantity Threshold: 25")
-
   end
   
   xit "shows a flash message if not all sections are filled in" do

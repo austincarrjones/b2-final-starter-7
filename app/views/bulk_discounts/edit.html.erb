@@ -1,4 +1,5 @@
 <%# <%= render partial: "shared/nav" %> 
 
+<h3>Edit Bulk Discount</h3>
 <p> Note: fill in Percentage discount as a decimal i.e. 0.2 = 20% </p>
-<%= render partial: 'form', locals: { method: :patch, url: merchant_bulk_discount_path(@merchant, @bulk_discount), class: 'bulk_discounts_form', local: true, model: nil } %>
+<%= render partial: 'form', locals: { method: :patch, url: merchant_bulk_discount_path(@merchant, @bulk_discount), class: 'bulk_discounts_form', local: true, model: @bulk_discount } %>
