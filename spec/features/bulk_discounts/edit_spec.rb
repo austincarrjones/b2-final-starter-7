@@ -27,7 +27,7 @@ RSpec.describe "bulk_discounts edit" do
     expect(page).to have_content("Bulk Discount ##{@bd_1.id} - Percentage Discount: 45%, Quantity Threshold: 25")
   end
   
-  xit "shows a flash message if not all sections are filled in" do
+  it "shows a flash message if not all sections are filled in" do
     fill_in "Percentage discount", with: ""
     fill_in "Quantity threshold", with: "25"
 
