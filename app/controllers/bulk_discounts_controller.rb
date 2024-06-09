@@ -9,7 +9,7 @@ class BulkDiscountsController < ApplicationController
 
   def show
     @merchant = Merchant.find(params[:merchant_id])
-    @bulk_discounts = @merchant.bulk_discounts
+    @bulk_discount = BulkDiscount.find(params[:id])
   end
 
   def new
@@ -28,10 +28,34 @@ class BulkDiscountsController < ApplicationController
     # end
   end
 
-  # private - this was not working correctly and was not covered.
-  # def bulk_discount_params
-  #   params.require(:bulk_discount).permit(:percentage_discount, :quantity_threshold)
-  # end
+  def edit
+    @merchant = Merchant.find(params[:merchant_id])
+    @bulk_discount = BulkDiscount.find(params[:id])
+  end
+
+  def update
+    @merchant = Merchant.find(params[:merchant_id])
+    @bulk_discount = BulkDiscount.find(params[:id])
+    if @bulk_discount.update(bulk_discount_params)
+      redirect_to merchant_bulk_discount_path(@merchant, @bulk_discount)
+      flash.notice = "Succesfully Updated Discount Info!"
+    else
+      redirect_to edit_merchant_bulk_discount_path(@merchant, @bulk_discount)
+      flash.notice = "All fields must be completed, get your act together."
+    end
+  end
+
+  def destroy
+    @merchant = Merchant.find(params[:merchant_id])
+    @bulk_discount = BulkDiscount.find(params[:id])
+    @bulk_discount.destroy
+    redirect_to merchant_bulk_discounts_path(@merchant), notice: 'Bulk discount was successfully deleted.'
+  end
+
+  private # this was not working correctly and was not covered.
+  def bulk_discount_params
+    params.require(:bulk_discount).permit(:percentage_discount, :quantity_threshold)
+  end
 
   # def find_bulk_discount_and_merchant
   #   @bulk_discount = BulkDiscount.find(params[:id])

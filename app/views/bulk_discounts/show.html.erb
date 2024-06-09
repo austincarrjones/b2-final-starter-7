@@ -1,2 +1,12 @@
 <%# <%= render partial: "shared/nav" %> 
 
+<%# <body>
+  <div class="row">
+    <p class='col-12'><%= @bulk_discount.id %></p>
+  </div> 
+
+  <p><%= "Bulk Discount ##{@bulk_discount.id}"%> - Percentage Discount: <%= @bulk_discount.percentage_format %>%, Quantity Threshold: <%= @bulk_discount.quantity_threshold %></p>
+
+  <strong><%= link_to "Edit Bulk Discount", edit_merchant_bulk_discount_path(@merchant, @bulk_discount) %></strong> 
+
+</body>
