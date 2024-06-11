@@ -100,4 +100,42 @@ RSpec.describe "invoices show" do
     end
   end
 
+  describe "discounted revenue" do
+    it "should display total discounted revenue from this invoice which includes bulk discounts" do
+      merchant1 = Merchant.create!(name: "Hair Care")
+
+      item_1 = Item.create!(name: "Shampoo", description: "This washes your hair", unit_price: 10, merchant_id: merchant1.id)
+      item_2 = Item.create!(name: "Conditioner", description: "This makes your hair shiny", unit_price: 20, merchant_id: merchant1.id)
+      item_3 = Item.create!(name: "Brush", description: "This takes out tangles", unit_price: 5, merchant_id: merchant1.id)
+  
+      customer_1 = Customer.create!(first_name: "Joey", last_name: "Smith")
+
+      invoice_1 = Invoice.create!(customer_id: customer_1.id, status: 2, created_at: "2012-03-27 14:54:09")
+    
+      ii_1 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_1.id, quantity: 5, unit_price: 10, status: 2)
+      ii_2 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_2.id, quantity: 10, unit_price: 20, status: 2)
+      ii_3 = InvoiceItem.create!(invoice_id: invoice_1.id, item_id: item_2.id, quantity: 1, unit_price: 30, status: 2)
+  
+      transaction1 = Transaction.create!(credit_card_number: 203942, result: 1, invoice_id: invoice_1.id)
+
+      bd_1 = BulkDiscount.create!(merchant_id: merchant1.id, percentage_discount: 0.2, quantity_threshold: 5)
+      bd_2 = BulkDiscount.create!(merchant_id: merchant1.id, percentage_discount: 0.5, quantity_threshold: 10)
+      #20% off item 1. (q5 * up10) = 50 * pd(0.2) = 10
+      #50% off item 2 (q10 *up20) = 200 * pd(0.5) = 100
+      #Total Revenue = 280
+      #Total Discount = 110
+      #Total Discounted Revenue = 170
+      
+      visit merchant_invoice_path(merchant1, invoice_1)
+      save_and_open_page
+      expect(page).to have_content("Total Revenue: $280")
+      expect(page).to have_content(@invoice_1.total_discount)
+      expect(page).to have_content("Total Discount: $110")
+      expect(page).to have_content("Total Discounted Revenue: $170")
+
+    end
+
+  end
+
+
 end
