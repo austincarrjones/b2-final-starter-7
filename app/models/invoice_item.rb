@@ -7,6 +7,7 @@ class InvoiceItem < ApplicationRecord
 
   belongs_to :invoice
   belongs_to :item
+  has_many :bulk_discounts, through: :item
 
   enum status: [:pending, :packaged, :shipped]
 
@@ -14,4 +15,6 @@ class InvoiceItem < ApplicationRecord
     invoice_ids = InvoiceItem.where("status = 0 OR status = 1").pluck(:invoice_id)
     Invoice.order(created_at: :asc).find(invoice_ids)
   end
+
+  
 end

@@ -10,6 +10,8 @@ RSpec.describe Invoice, type: :model do
     it { should have_many(:items).through(:invoice_items) }
     it { should have_many(:merchants).through(:items) }
     it { should have_many :transactions}
+    it { should have_many(:bulk_discounts).through(:merchants) }
+
   end
   describe "instance methods" do
     it "total_revenue" do
@@ -22,6 +24,10 @@ RSpec.describe Invoice, type: :model do
       @ii_11 = InvoiceItem.create!(invoice_id: @invoice_1.id, item_id: @item_8.id, quantity: 1, unit_price: 10, status: 1)
 
       expect(@invoice_1.total_revenue).to eq(100)
+    end
+
+    it "total_discount" do
+      #do something here
     end
   end
 end
