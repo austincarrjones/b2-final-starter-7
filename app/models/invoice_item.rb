@@ -16,5 +16,8 @@ class InvoiceItem < ApplicationRecord
     Invoice.order(created_at: :asc).find(invoice_ids)
   end
 
-  
+  # def discount_applied
+  #   # binding.pry
+  #   .joins(:bulk_discounts)
+  # end
 end

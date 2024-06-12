@@ -15,11 +15,13 @@ class Invoice < ApplicationRecord
   end
 
   def total_discount
+    # binding.pry
     total_discount = 0
     temp_table = invoice_items
                 .joins(:bulk_discounts)
                 .where("invoice_items.quantity >= bulk_discounts.quantity_threshold")
-                .select("invoice_items.id, MAX(bulk_discounts.percentage_discount) as max_percentage_discount, (invoice_items.quantity * invoice_items.unit_price * MAX(bulk_discounts.percentage_discount)) as discount_value")
+                .select("invoice_items.id, MAX(bulk_discounts.percentage_discount) as max_percentage_discount, 
+                      (invoice_items.quantity * invoice_items.unit_price * MAX(bulk_discounts.percentage_discount)) as discount_value")
                 .group("invoice_items.id")
     temp_table.each do |row|
       total_discount += row.discount_value
@@ -31,13 +33,15 @@ class Invoice < ApplicationRecord
     total_revenue - total_discount
   end
   
+  def bulk_discount_applied
+    temp_table = invoice_items
+                .joins(:bulk_discounts)
+                .where("invoice_items.quantity >= bulk_discounts.quantity_threshold")
+                .select("invoice_items.id as ii_id, bulk_discounts.id as bd_id, 
+                        MAX(bulk_discounts.percentage_discount) as max_percentage_discount")
+                .group("invoice_items.id, bulk_discounts.id")
+      binding.pry
+      temp_table.each do |row|
+        row.ii.id
+  end
 end
-
-
-# def total_discount
-#   temp_table = invoice_items
-#                             .joins(:bulk_discounts)
-#                             .where("invoice_items.quantity >= bulk_discounts.quantity_threshold")
-#                             .select("invoice_items.id, invoice_items.quantity, invoice_items.unit_price, MAX(bulk_discounts.percentage_discount), bulk_discounts.quantity_threshold")
-#                             .group('invoice_items.id, bulk_discounts.id')
-# end
